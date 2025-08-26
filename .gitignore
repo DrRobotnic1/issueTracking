@@ -9,3 +9,4 @@ IssueTrackingDb.db
 /IssueTrackingDb.db-wal
 /IssueTrackingDb.db-shm
 /API.csproj.user
+/API.Tests/obj
