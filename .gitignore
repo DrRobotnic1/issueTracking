@@ -6,3 +6,6 @@ Migrations/
 appsettings.json
 .env
 IssueTrackingDb.db
+/IssueTrackingDb.db-wal
+/IssueTrackingDb.db-shm
+/API.csproj.user
