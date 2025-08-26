@@ -1,5 +1,7 @@
 
 using API.Data;
+using API.Repositories;
+using API.Services;
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +17,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(conn));
+builder.Services.AddScoped<IIssueRepository, IssueRepository>();
+builder.Services.AddScoped<IssueService>();
 
 
 var app = builder.Build();
