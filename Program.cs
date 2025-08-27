@@ -1,5 +1,6 @@
 
 using API.Data;
+using API.Middleware;
 using API.Repositories;
 using API.Services;
 using DotNetEnv;
@@ -30,6 +31,7 @@ if (app.Environment.IsDevelopment())
   app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
