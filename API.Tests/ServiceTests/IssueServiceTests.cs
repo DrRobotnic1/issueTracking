@@ -32,5 +32,50 @@ namespace API.API.Tests.ServiceTests
           issue => issue.Description == "Test issue" && issue.IssueTypeId == 1 && issue.StatusId == 1
       )), Times.Once);
     }
+    [Fact]
+    public async Task GetAllIssueAsync_ShouldReturnMappedResponse()
+    {
+      var issues = new List<Issue>
+        {
+            new Issue
+            {
+                Id = 1,
+                Description = "Issue 1",
+                Status = new Status { Id = 1, Name = "Open" },
+                StatusId = 1,
+                IssueType = new IssueType { Id = 1, Name = "Bug" },
+                IssueTypeId = 1
+            }
+        };
+
+      _mockRepo.Setup(r => r.GetAllAsync()).ReturnsAsync(issues);
+      var result = await _service.GetAllIssueAsync();
+
+      Assert.Single(result);
+      Assert.Equal("Issue 1", result[0].Description);
+      Assert.Equal("Open", result[0].Status.Name);
+      Assert.Equal("Bug", result[0].IssueType.Name);
+    }
+
+    [Fact]
+    public async Task GetIssueByIdAsync_ShouldReturnCorrectIssue()
+    {
+      var issue = new Issue
+      {
+        Id = 1,
+        Description = "Issue 1",
+        Status = new Status { Id = 1, Name = "Open" },
+        StatusId = 1,
+        IssueType = new IssueType { Id = 1, Name = "Bug" },
+        IssueTypeId = 1
+      };
+
+      _mockRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync(issue);
+      var result = await _service.GetIssueByIdAsync(1);
+
+      Assert.NotNull(result);
+      Assert.Equal("Issue 1", result.Description);
+      Assert.Equal("Open", result.Status.Name);
+    }
   }
 }
