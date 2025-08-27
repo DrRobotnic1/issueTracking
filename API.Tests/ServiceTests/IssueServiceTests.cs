@@ -5,7 +5,7 @@ using Xunit;
 using Moq;
 using API.Models;
 
-namespace API.API.Tests.RepoTests
+namespace API.API.Tests.ServiceTests
 {
   public class IssueServiceTests
   {
