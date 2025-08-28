@@ -2,14 +2,14 @@ using API.Data;
 using API.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Repositories
+namespace API.Repositories.IssueRepo
 {
   public class IssueRepository : IIssueRepository
   {
     private readonly AppDbContext _context;
     public IssueRepository(AppDbContext context)
     {
-        this._context = context;
+        _context = context;
     }
     public async Task AddAsync(Issue issue)
     {
@@ -22,14 +22,16 @@ namespace API.Repositories
       return await _context.Issues
        .Include(issue => issue.Status)
        .Include(issue => issue.IssueType)
+       .Include(issue => issue.User)
        .ToListAsync();
     }
 
     public async Task<Issue> GetByIdAsync(int Id)
     {
       return await _context.Issues
-         .Include(i => i.Status)
+         .Include(issue => issue.Status)
          .Include(i => i.IssueType)
+         .Include(issue => issue.User)
          .FirstOrDefaultAsync(i => i.Id == Id);
     }
   }

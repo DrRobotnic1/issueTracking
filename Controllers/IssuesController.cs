@@ -1,12 +1,15 @@
 using API.Data;
-using API.Dtos;
+using API.Dtos.Issue;
 using API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace API.Controllers
 {
+  [Authorize]
   [Route("api/v1/[controller]")]
   [ApiController]
   public class IssuesController : ControllerBase
@@ -29,9 +32,17 @@ namespace API.Controllers
       return Ok(await _issueService.GetIssueByIdAsync(Id));
     }
     [HttpPost]
-    public async Task CreateIssueAsync(IssueRequestDto request)
+    public async Task<IActionResult> CreateIssueAsync(IssueRequestDto request)
     {
-      await _issueService.CreateIssueAsync(request);
+      var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+      if (string.IsNullOrEmpty(userId))
+      {
+        return Unauthorized("User ID not found in token.");
+      }
+
+      await _issueService.CreateIssueAsync(request, userId);
+      return Ok();
     }
   }
 }

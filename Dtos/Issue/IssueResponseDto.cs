@@ -1,3 +1,5 @@
+using API.Dtos.User;
+
 namespace API.Dtos.Issue
 {
   public class IssueResponseDto
@@ -10,5 +12,7 @@ namespace API.Dtos.Issue
 
     public DateTime CreatedAt { get; set; }
     public DateTime? DateUpdated { get; set; }
+
+    public UserDto User { get; set; }
   }
 }

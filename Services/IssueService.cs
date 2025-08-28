@@ -1,8 +1,7 @@
-using API.Dtos;
 using API.Dtos.Issue;
 using API.Mappings;
 using API.Models;
-using API.Repositories;
+using API.Repositories.IssueRepo;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace API.Services
@@ -14,9 +13,9 @@ namespace API.Services
     {
        this._repository = repository; 
     }
-    public async Task CreateIssueAsync(IssueRequestDto request)
+    public async Task CreateIssueAsync(IssueRequestDto request,string userId)
     {
-      await _repository.AddAsync(IssueMapper.ToNewIssue(request));
+      await _repository.AddAsync(IssueMapper.ToNewIssue(request,userId));
     }
     public async Task<List<IssueResponseDto>> GetAllIssueAsync()
     {

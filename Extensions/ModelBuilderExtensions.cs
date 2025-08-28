@@ -5,6 +5,7 @@ namespace API.Extensions
 {
   public static class ModelBuilderExtensions
   {
+
     public static void Seed(this ModelBuilder modelBuilder)
     {
       modelBuilder.Entity<Status>().HasData(
@@ -18,6 +19,12 @@ namespace API.Extensions
           new IssueType { Id = 2, Name = "Feature" },
           new IssueType { Id = 3, Name = "Task" }
       );
+      modelBuilder.Entity<Issue>()
+    .HasOne(i => i.User)
+    .WithMany()
+    .HasForeignKey(i => i.UserId)
+    .OnDelete(DeleteBehavior.SetNull);
+
     }
   }
 }

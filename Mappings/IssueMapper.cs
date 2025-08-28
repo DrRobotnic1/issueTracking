@@ -1,17 +1,18 @@
-using API.Dtos;
 using API.Dtos.Issue;
+using API.Dtos.User;
 using API.Models;
 
 namespace API.Mappings
 {
   public class IssueMapper
   {
-    public static Issue ToNewIssue(IssueRequestDto request)
+    public static Issue ToNewIssue(IssueRequestDto request,string userId)
     {
       return new Issue
       {
         Description = request.Description,
         StatusId = 1,
+        UserId = userId,
         IssueTypeId = request.IssueTypeId,
         DateUpdated = null
       };
@@ -27,6 +28,8 @@ namespace API.Mappings
       {
         Id = issue.Id,
         Description = issue.Description,
+        CreatedAt = issue.CreatedAt,
+        DateUpdated = issue.DateUpdated,
         Status = new StatusDto
         {
           Id = issue.Status.Id,
@@ -37,8 +40,11 @@ namespace API.Mappings
           Id = issue.IssueType.Id,
           Name = issue.IssueType.Name
         },
-        CreatedAt = issue.CreatedAt,
-        DateUpdated = issue.DateUpdated
+        User = new UserDto
+        {
+          Id = issue.User.Id,
+          UserName = issue.User.UserName
+        }
       };
     }
   }
