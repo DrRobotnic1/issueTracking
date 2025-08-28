@@ -2,6 +2,7 @@ using API.Data;
 using API.Helpers;
 using API.Models;
 using API.Repositories;
+using API.Repositories.IssueRepo;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 

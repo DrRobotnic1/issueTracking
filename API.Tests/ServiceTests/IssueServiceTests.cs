@@ -1,9 +1,10 @@
 using API.Dtos;
-using API.Repositories;
 using API.Services;
 using Xunit;
 using Moq;
 using API.Models;
+using API.Repositories.IssueRepo;
+using API.Dtos.Issue;
 
 namespace API.API.Tests.ServiceTests
 {
@@ -26,10 +27,17 @@ namespace API.API.Tests.ServiceTests
         Description = "Test issue",
         IssueTypeId = 1
       };
-      await _service.CreateIssueAsync(request);
+
+      var userId = "thabang-test-user-id";
+
+      await _service.CreateIssueAsync(request, userId);
 
       _mockRepo.Verify(repo => repo.AddAsync(It.Is<Issue>(
-          issue => issue.Description == "Test issue" && issue.IssueTypeId == 1 && issue.StatusId == 1
+          issue =>
+              issue.Description == "Test issue" &&
+              issue.IssueTypeId == 1 &&
+              issue.StatusId == 1 && 
+              issue.UserId == userId
       )), Times.Once);
     }
     [Fact]

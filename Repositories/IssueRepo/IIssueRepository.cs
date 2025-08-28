@@ -1,6 +1,6 @@
 using API.Models;
 
-namespace API.Repositories
+namespace API.Repositories.IssueRepo
 {
   public interface IIssueRepository
   {
