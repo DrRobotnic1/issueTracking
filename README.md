@@ -1,78 +1,96 @@
-Overview
-Minimal ASP.NET Core API offering add, list, and status update features for issues. Built with clean architecture, JWT authentication, global error handling, documentation, and testing.
+# Issue Tracker API
 
-Highlights
-• Clean layering with Controllers, Services, SQLite (Issue, Status, IssueType, User tables)
-• JWT-based authentication
-• Global error handling via custom middleware for consistent error responses
-• API docs in Markdown; model diagrams with PlantUML
-• Unit tests covering key functionality
-• Quick local setup with SQLite
+A clean, minimal **ASP.NET Core API** to add, list, and update issue statuses with JWT authentication, global error handling, docs, and tests.
 
-Getting Started
-Clone the repo, then restore packages:
+---
 
+##  Overview
+
+This project is a minimal-viable **Issue Tracker API**, designed for clarity, testability, and maintainability:
+
+- Clean architecture separating Controllers, Services, and Data  
+- Backend storage with SQLite and normalized tables (Issue, Status, IssueType, User)  
+- Secure JWT authentication  
+- Custom middleware for **global error handling**—consistent, centralized error responses  
+- Fully documented endpoints in Markdown and entity diagrams in PlantUML  
+- Comprehensive unit tests for key behaviors  
+- Easy local setup for fast onboarding  
+
+---
+
+##  Getting Started
+
+### Clone & Restore
+
+```bash
+git clone [your-repo-url]
+cd [project-folder]
 dotnet restore
+Environment Setup
+Create a .env file at the project root (add to .gitignore):
 
-
-Environment Configuration
-Create a .env file in project root (ensure it’s in .gitignore):
-
+env
+Copy code
 DefaultConnection=Data Source=issueTracker.db
-JwtSettings__Secret=YourJWTSecretHere
+JwtSettings__Secret=YourStrongJWTSecret
+In Program.cs, load the environment variables before configuring:
 
-
-In Program.cs, make sure to load this before building configuration:
-
+csharp
+Copy code
 DotNetEnv.Env.Load();
 builder.Configuration.AddEnvironmentVariables();
+Access values via:
 
-
-Then fetch values via builder.Configuration.GetConnectionString("DefaultConnection") or configuration sections.
-
-Running
-Apply migrations and start the app with:
-
+csharp
+Copy code
+var conn = builder.Configuration.GetConnectionString("DefaultConnection");
+var jwtSecret = builder.Configuration["JwtSettings:Secret"];
+Run the App
+bash
+Copy code
 dotnet ef database update
 dotnet run
+Your server will be running at https://localhost:<port>.
 
+API Endpoints
+For full request/response specs, see Docs/API_DOCUMENTATION.md. The core routes include:
 
-Server runs at https://localhost:<port>.
+POST /api/v1/auth/register — Register user
 
-Endpoints
-See the included API documentation for routes on:
+POST /api/v1/auth/login — Log in and receive JWT
 
-User registration
+POST /api/v1/issues — Create a new issue
 
-User login
+GET /api/v1/issues — List all issues
 
-Create issue
+GET /api/v1/issues/{id} — Get a specific issue
 
-Get all issues
-
-Get issue by ID
-
-Update issue status
+PUT /api/v1/issues/{id}/status — Update issue status
 
 Project Structure
-
-Controllers/ – API endpoints
-
-Services/ – Business logic
-
-Data/ – Models and EF Core setup
-
-Middlewares/ – Global error handling
-
-Docs/ – Markdown API docs & PlantUML diagrams
-
-Tests/ – Unit tests (xUnit)
-
+vbnet
+Copy code
+Controllers/       – API endpoints
+Services/          – Business logic
+Data/              – EF Core models & DbContext
+Middlewares/       – Global error handling middleware
+Docs/              – API documentation & PlantUML diagrams
+Tests/             – Unit tests (xUnit)
 Testing
-Run tests with:
+Run unit tests with:
 
+bash
+Copy code
 dotnet test
-
-
 Tech Stack
-ASP.NET Core, Entity Framework Core, SQLite, JWT auth, xUnit, Markdown, PlantUML
+Framework: ASP.NET Core
+
+Database: SQLite via Entity Framework Core
+
+Authentication: JWT Bearer Tokens
+
+Error Handling: Custom middleware for centralized exception management
+
+Testing: xUnit
+
+Documentation: Markdown & PlantUML
