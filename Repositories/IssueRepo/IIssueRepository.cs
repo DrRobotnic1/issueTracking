@@ -7,5 +7,7 @@ namespace API.Repositories.IssueRepo
     Task AddAsync(Issue issue);
     Task<List<Issue>> GetAllAsync();
     Task<Issue> GetByIdAsync(int id);
+    Task UpdateStatusAsync(int issueId, int newStatusId);
+
   }
 }

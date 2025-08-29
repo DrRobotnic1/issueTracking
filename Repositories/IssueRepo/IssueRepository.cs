@@ -34,5 +34,19 @@ namespace API.Repositories.IssueRepo
          .Include(issue => issue.User)
          .FirstOrDefaultAsync(i => i.Id == Id);
     }
+
+    public async Task UpdateStatusAsync(int issueId, int newStatusId)
+    {
+      var issue = await _context.Issues.FindAsync(issueId);
+      if (issue == null)
+      {
+        throw new KeyNotFoundException("Issue not found.");
+      }
+
+      issue.StatusId = newStatusId;
+      issue.DateUpdated = DateTime.UtcNow;
+
+      await _context.SaveChangesAsync();
+    }
   }
 }

@@ -44,5 +44,18 @@ namespace API.Controllers
       await _issueService.CreateIssueAsync(request, userId);
       return Ok();
     }
+    [HttpPatch("{issueId}/status")]
+    public async Task<IActionResult> UpdateIssueStatusAsync(int issueId, [FromBody] int newStatusId)
+    {
+      try
+      {
+        await _issueService.UpdateIssueStatusAsync(issueId, newStatusId);
+        return NoContent();
+      }
+      catch (KeyNotFoundException)
+      {
+        return NotFound();
+      }
+    }
   }
 }

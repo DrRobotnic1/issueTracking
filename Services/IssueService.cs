@@ -25,5 +25,9 @@ namespace API.Services
     {
       return  IssueMapper.ToResponseDto(await _repository.GetByIdAsync(Id));
     }
+    public async Task UpdateIssueStatusAsync(int issueId, int newStatusId)
+    {
+      await _repository.UpdateStatusAsync(issueId, newStatusId);
+    }
   }
 }
