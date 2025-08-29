@@ -10,3 +10,4 @@ IssueTrackingDb.db
 /IssueTrackingDb.db-shm
 /API.csproj.user
 /API.Tests/obj
+appsettings.Development.json
