@@ -15,8 +15,6 @@ public class IssueRepositoryTests
   [Fact]
   public async Task AddAsync_ShouldAddIssue()
   {
-
-    
     var context = TestDbContextFactory.Create();
     var repo = new IssueRepository(context);
 
@@ -26,7 +24,7 @@ public class IssueRepositoryTests
 
     var issue = new Issue
     {
-      Description = "i'm facing a problem ",
+      Description = "Test Issue",
       StatusId = statusId,
       IssueTypeId = issueTypeId,
       UserId = userId,
