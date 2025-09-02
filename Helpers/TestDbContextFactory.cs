@@ -14,9 +14,10 @@ namespace API.Helpers
 
       var context = new AppDbContext(options);
 
-      
-      context.Statuses.Add(new Status { Id = 1, Name = "Open" });
-      context.IssueTypes.Add(new IssueType { Id = 1, Name = "Bug" });
+
+      context.Statuses.Add(new Status { Name = "Open" });
+      context.IssueTypes.Add(new IssueType { Name = "Bug" });
+      context.Users.Add(new User { Id = "TestUser", UserName = "Thabang Nkomo" });
       context.SaveChanges();
 
       return context;

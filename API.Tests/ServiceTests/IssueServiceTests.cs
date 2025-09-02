@@ -44,17 +44,19 @@ namespace API.API.Tests.ServiceTests
     public async Task GetAllIssueAsync_ShouldReturnMappedResponse()
     {
       var issues = new List<Issue>
-        {
-            new Issue
-            {
-                Id = 1,
-                Description = "Issue 1",
-                Status = new Status { Id = 1, Name = "Open" },
-                StatusId = 1,
-                IssueType = new IssueType { Id = 1, Name = "Bug" },
-                IssueTypeId = 1
-            }
-        };
+{
+    new Issue
+    {
+        Id = 1,
+        Description = "Issue 1",
+        StatusId = 1,
+        Status = new Status { Id = 1, Name = "Open" },       
+        IssueTypeId = 1,
+        IssueType = new IssueType { Id = 1, Name = "Bug" },  
+        UserId = "TestUser",
+        User = new User { Id = "TestUser", UserName = "Test User" } 
+    }
+};
 
       _mockRepo.Setup(r => r.GetAllAsync()).ReturnsAsync(issues);
       var result = await _service.GetAllIssueAsync();
@@ -68,15 +70,19 @@ namespace API.API.Tests.ServiceTests
     [Fact]
     public async Task GetIssueByIdAsync_ShouldReturnCorrectIssue()
     {
+
       var issue = new Issue
       {
         Id = 1,
         Description = "Issue 1",
-        Status = new Status { Id = 1, Name = "Open" },
         StatusId = 1,
+        Status = new Status { Id = 1, Name = "Open" },
+        IssueTypeId = 1,
         IssueType = new IssueType { Id = 1, Name = "Bug" },
-        IssueTypeId = 1
+        UserId = "TestUser",
+        User = new User { Id = "TestUser", UserName = "Test User" } 
       };
+
 
       _mockRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync(issue);
       var result = await _service.GetIssueByIdAsync(1);

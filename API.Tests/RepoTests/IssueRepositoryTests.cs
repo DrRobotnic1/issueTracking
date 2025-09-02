@@ -15,14 +15,21 @@ public class IssueRepositoryTests
   [Fact]
   public async Task AddAsync_ShouldAddIssue()
   {
+
     
     var context = TestDbContextFactory.Create();
     var repo = new IssueRepository(context);
+
+    var statusId = context.Statuses.First().Id;
+    var issueTypeId = context.IssueTypes.First().Id;
+    var userId = context.Users.First().Id;
+
     var issue = new Issue
     {
-      Description = "Test Issue",
-      StatusId = 1,
-      IssueTypeId = 1,
+      Description = "i'm facing a problem ",
+      StatusId = statusId,
+      IssueTypeId = issueTypeId,
+      UserId = userId,
       CreatedAt = DateTime.UtcNow,
       DateUpdated = null
     };
@@ -40,11 +47,16 @@ public class IssueRepositoryTests
     var context = TestDbContextFactory.Create();
     var repo = new IssueRepository(context);
 
+    var statusId = context.Statuses.First().Id;
+    var issueTypeId = context.IssueTypes.First().Id;
+    var userId = context.Users.First().Id;
+
     context.Issues.Add(new Issue
     {
-      Description = "Sample",
-      StatusId = 1,
-      IssueTypeId = 1,
+      Description = "Sample issue",
+      StatusId = statusId,
+      IssueTypeId = issueTypeId,
+      UserId = userId,
       CreatedAt = DateTime.UtcNow
     });
     await context.SaveChangesAsync();
@@ -65,12 +77,17 @@ public class IssueRepositoryTests
     var context = TestDbContextFactory.Create();
     var repo = new IssueRepository(context);
 
+    var statusId = context.Statuses.First().Id;
+    var issueTypeId = context.IssueTypes.First().Id;
+    var userId = context.Users.First().Id;
+
     context.Issues.Add(new Issue
     {
       Id = 99,
       Description = "Specific",
-      StatusId = 1,
-      IssueTypeId = 1,
+      StatusId = statusId,
+      IssueTypeId = issueTypeId,
+      UserId = userId,
       CreatedAt = DateTime.UtcNow
     });
     await context.SaveChangesAsync();
